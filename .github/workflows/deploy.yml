@@ -4,14 +4,14 @@ concurrency:
   group: ${{ github.workflow }} # 使用工作流名称作为并发组的key
   cancel-in-progress: true    # 取消任何正在进行的相同并发组的工作流
 
-on:
+于:
   schedule:
     # 凌晨任务：北京时间每天 01:00（UTC 前一天 17:00）
     - cron: '0 17 * * *'
     # 早间任务：北京时间每天 05:00（UTC 前一天 21:00）
-    #- cron: '0 21 * * *'
+    - cron: '0 21 * * *'
      # 午间任务：北京时间每天 11:40（UTC 03:40）
-    - cron: '40 3 * * *'
+    #- cron: '40 3 * * *'
     # 晚间任务：北京时间每天 22:00（UTC 14:00）
     #- cron: '0 14 * * *'
   workflow_dispatch:  # 手动触发
