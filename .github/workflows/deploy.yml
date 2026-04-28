@@ -9,7 +9,7 @@ on:
     # 凌晨任务：北京时间 01:00 (UTC 17:00)
     - cron: '0 17 * * *'
     # 下午任务：北京时间 13:03 (UTC 05:03)
-    - cron: '10 5 * * *'
+    - cron: '30 5 * * *'
   workflow_dispatch:
 
 jobs:
