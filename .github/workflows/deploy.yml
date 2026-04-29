@@ -7,9 +7,9 @@ concurrency:
 on:
   schedule:
     # 凌晨任务：北京时间 01:00 (UTC 17:00)
-    - cron: '0 17 * * *'
+    - cron: '27 19 * * *'
     # 下午任务：北京时间 13:30 (UTC 05:03)
-    - cron: '30 5 * * *'
+    - cron: '42 7 * * *'
   workflow_dispatch:
 
 jobs:
