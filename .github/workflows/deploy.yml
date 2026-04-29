@@ -5,13 +5,7 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  schedule:
-    # 凌晨任务：北京时间 03:27 (UTC 19:27)
-    # - cron: '27 19 * * *'
-    # 下午任务：北京时间 15:42 (UTC 07:42)
-    # - cron: '42 7 * * *'
   workflow_dispatch:
-  # 必须加上这个，否则 Cloudflare 的信号会被拒收
   repository_dispatch:
     types: [build]
 
@@ -21,36 +15,36 @@ jobs:
     environment: AutoRead
 
     steps:
-    - name: Set DNS to Google's DNS
-      run: |
-        echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
-        echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
+      - name: Set DNS to Google's DNS
+        run: |
+          echo "nameserver 8.8.8.8" | sudo tee /etc/resolv.conf
+          echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
 
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.10'
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.10'
 
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install certifi==2024.8.30 charset-normalizer==3.4.0 idna==3.10 requests==2.32.3 urllib3==2.2.3
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install certifi==2024.8.30 charset-normalizer==3.4.0 idna==3.10 requests==2.32.3 urllib3==2.2.3
 
-    - name: Run deployment script
-      env:
-        WXREAD_CURL_BASH: ${{ secrets.WXREAD_CURL_BASH }}
-        PUSH_METHOD: ${{ secrets.PUSH_METHOD }}
-        PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
-        WXPUSHER_SPT: ${{ secrets.WXPUSHER_SPT }}
-        TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-        TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-        SERVERCHAN_SPT:  ${{ secrets.SERVERCHAN_SPT }}
-        READ_NUM: ${{ vars.READ_NUM }}
-      run: |
-        python main.py
+      - name: Run deployment script
+        env:
+          WXREAD_CURL_BASH: ${{ secrets.WXREAD_CURL_BASH }}
+          PUSH_METHOD: ${{ secrets.PUSH_METHOD }}
+          PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+          WXPUSHER_SPT: ${{ secrets.WXPUSHER_SPT }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          SERVERCHAN_SPT:  ${{ secrets.SERVERCHAN_SPT }}
+          READ_NUM: ${{ vars.READ_NUM }}
+        run: |
+          python main.py
 
   keepalive-job:
     name: Keepalive Workflow
