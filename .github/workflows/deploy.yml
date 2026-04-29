@@ -7,9 +7,9 @@ concurrency:
 on:
   schedule:
     # 凌晨任务：北京时间 03:27 (UTC 19:27)
-    - cron: '27 19 * * *'
+    # - cron: '27 19 * * *'
     # 下午任务：北京时间 15:42 (UTC 07:42)
-    - cron: '42 7 * * *'
+    # - cron: '42 7 * * *'
   workflow_dispatch:
   # 必须加上这个，否则 Cloudflare 的信号会被拒收
   repository_dispatch:
