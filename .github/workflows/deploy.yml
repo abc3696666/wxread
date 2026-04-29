@@ -5,15 +5,13 @@ concurrency:
   cancel-in-progress: true
 
 on:
-  # 定时任务触发
   schedule:
     # 凌晨任务：北京时间 03:27 (UTC 19:27)
     - cron: '27 19 * * *'
     # 下午任务：北京时间 15:42 (UTC 07:42)
     - cron: '42 7 * * *'
-  # 允许在 GitHub 网页上手动点击运行
   workflow_dispatch:
-  # 关键：允许 Cloudflare 通过 API 远程触发
+  # 必须加上这个，否则 Cloudflare 的信号会被拒收
   repository_dispatch:
     types: [build]
 
