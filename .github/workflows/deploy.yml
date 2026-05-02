@@ -7,7 +7,8 @@ concurrency:
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [build]
+    # --- 修改点 1: 这里的 types 必须和 Worker 里的 event_type 一致 ---
+    types: [run-wxread] 
 
 jobs:
   deploy:
@@ -22,6 +23,13 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      # --- 修改点 2: 加入随机赖床时间 (0 到 25 分钟) ---
+      - name: 随机赖床 (0-25分钟)
+        run: |
+          DELAY_SECONDS=$(( (RANDOM % 1500) + 1 ))
+          echo "闹钟响了，准备赖床 $DELAY_SECONDS 秒..."
+          sleep $DELAY_SECONDS
 
       - name: Set up Python
         uses: actions/setup-python@v2
