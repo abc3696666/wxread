@@ -22,7 +22,8 @@ jobs:
           echo "nameserver 8.8.4.4" | sudo tee -a /etc/resolv.conf
 
       - name: Checkout repository
-        uses: actions/checkout@v2
+        # --- 升级点 1: 从 v2 升级到 v4 ---
+        uses: actions/checkout@v4
 
       # --- 修改点 2: 加入随机赖床时间 (0 到 25 分钟) ---
       - name: 随机赖床 (0-25分钟)
@@ -32,7 +33,8 @@ jobs:
           sleep $DELAY_SECONDS
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        # --- 升级点 2: 从 v2 升级到 v5 ---
+        uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
